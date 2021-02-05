@@ -7,7 +7,7 @@ BigInt::BigInt()
 
 BigInt::BigInt(std::string *value)
 {
-    this->value = value;
+    this->value = *value;
 }
 
 BigInt::BigInt(int *value)
@@ -17,11 +17,10 @@ BigInt::BigInt(int *value)
 
 void BigInt::setValue(std::string *value)
 {
-    this->value = value;
+    this->value = *value;
 }
 
 void BigInt::setValue(int *value)
 {
-    std::string str = numberToString(value);
-    this->value = &str;
+    this->value = numberToString(value);
 }

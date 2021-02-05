@@ -16,7 +16,7 @@ public:
     void setValue(int *);
 
 private:
-    std::string *value;
+    std::string value;
 };
 
 #endif // BIG_INT

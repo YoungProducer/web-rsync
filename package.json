@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "configure": "yarn node-gyp configure",
+    "build": "yarn node-gyp configure && yarn build:cpp",
+    "build:cpp": "yarn node-gyp build"
+  },
   "dependencies": {
     "node-addon-api": "^3.1.0"
   },
