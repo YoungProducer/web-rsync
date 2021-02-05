@@ -3,10 +3,16 @@
     {
       "target_name": "file-checksum",
       "cflags!": [ "-fno-exceptions" ],
-      "cflags_cc!": [ "-fno-exceptions" ],
+      "cflags_cc!": [
+        "-fno-exceptions",
+      ],
+      "cflags_cc": [
+        "-std=c++17"
+      ],
       "sources": [
         "./src/sha256-checksum.cpp",
         "./src/index.cpp",
+        '<!@(ls -1 ./src/*.cpp)',
         '<!@(ls -1 ./src/**/*.cpp)'
       ],
       'dependencies': [

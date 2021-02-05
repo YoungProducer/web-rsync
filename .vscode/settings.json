@@ -52,7 +52,9 @@
         "ratio": "cpp",
         "mutex": "cpp",
         "thread": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "filesystem": "cpp",
+        "codecvt": "cpp"
     },
     "C_Cpp.default.includePath": [
         "./node_modules/node-addon-api"
@@ -60,5 +62,6 @@
     "cSpell.words": [
         "Napi"
     ],
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black"
 }

@@ -4,27 +4,10 @@
 #include <string>
 #include <vector>
 
-struct FileData
-{
-    std::string path;
-    std::string checksum;
-};
+#include "./types/simple.h"
 
-enum ActionType
-{
-    UPDATE = 'UPDATE',
-    REMOVE = 'REMOVE',
-    ADD = 'ADD'
-};
+FileData findPair(std::string path, std::vector<FileData> *source);
 
-struct FileAction
-{
-    std::string path;
-    ActionType type;
-};
-
-FileData *findPair(std::string path, std::vector<FileData> *source);
-
-std::vector<FileAction> *getFilesDiff(std::vector<FileData> *next, std::vector<FileData> *prev);
+std::vector<FileAction> getFilesDiff(std::vector<FileData> *next, std::vector<FileData> *prev);
 
 #endif // FILES_DIFF

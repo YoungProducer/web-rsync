@@ -1,6 +1,26 @@
 #ifndef SIMPLE
 #define SIMPLE
 
-typedef unsigned long long uint64;
+#include <string>
+struct FileData
+{
+    std::string path;
+    std::string checksum;
+
+    FileData(std::string *path, std::string *checksum);
+};
+
+enum ActionType
+{
+    UPDATE = 1,
+    REMOVE = 2,
+    ADD = 3
+};
+
+struct FileAction
+{
+    std::string path;
+    ActionType type;
+};
 
 #endif // SIMPLE
