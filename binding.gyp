@@ -6,7 +6,8 @@
       "cflags_cc!": [ "-fno-exceptions" ],
       "sources": [
         "./src/sha256-checksum.cpp",
-        "./src/index.cpp"
+        "./src/index.cpp",
+        '<!@(ls -1 ./src/**/*.cpp)'
       ],
       'dependencies': [
         "<!(node -p \"require('node-addon-api').gyp\")"

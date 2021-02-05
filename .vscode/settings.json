@@ -46,12 +46,19 @@
         "sstream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "chrono": "cpp",
+        "condition_variable": "cpp",
+        "ratio": "cpp",
+        "mutex": "cpp",
+        "thread": "cpp",
+        "cinttypes": "cpp"
     },
     "C_Cpp.default.includePath": [
         "./node_modules/node-addon-api"
     ],
     "cSpell.words": [
         "Napi"
-    ]
+    ],
+    "editor.formatOnSave": true
 }
