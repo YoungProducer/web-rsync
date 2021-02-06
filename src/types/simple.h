@@ -2,6 +2,8 @@
 #define SIMPLE
 
 #include <string>
+#include <boost/unordered_map.hpp>
+
 struct FileData
 {
     std::string path;
@@ -22,5 +24,7 @@ struct FileAction
     std::string path;
     ActionType type;
 };
+
+typedef std::unordered_map<std::string, std::string> FilesMap;
 
 #endif // SIMPLE

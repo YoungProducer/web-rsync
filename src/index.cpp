@@ -23,13 +23,13 @@ Napi::String test(const Napi::CallbackInfo &info)
     std::string directoryPath = (std::string)info[0].ToString();
 
     auto start = std::chrono::high_resolution_clock::now();
-    std::vector<FileData> result = scanDir(directoryPath);
+    FilesMap result = scanDir(directoryPath);
     auto stop = std::chrono::high_resolution_clock::now();
 
-    for (const auto e : result)
+    for (const auto &e : result)
     {
-        std::cout << "path: " << e.path << std::endl
-                  << "checksum: " << e.checksum << std::endl
+        std::cout << "path: " << e.first << std::endl
+                  << "checksum: " << e.second << std::endl
                   << std::endl;
     }
 

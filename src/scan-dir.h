@@ -2,12 +2,12 @@
 #define SCAN_DIR
 
 #include <string>
-#include <vector>
 #include <filesystem>
+#include <boost/unordered_map.hpp>
 
 #include "./types/simple.h"
 #include "sha256-checksum.h"
 
-std::vector<FileData> scanDir(std::string path);
+FilesMap scanDir(std::string path);
 
 #endif // SCAN_DIR
