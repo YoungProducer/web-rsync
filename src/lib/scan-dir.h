@@ -7,6 +7,6 @@
 #include "../types/simple.h"
 #include "sha256-checksum.h"
 
-FilesMap scanDir(std::string path);
+FilesMap scan_dir(std::string path);
 
 #endif // SCAN_DIR

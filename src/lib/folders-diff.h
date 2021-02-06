@@ -7,6 +7,6 @@
 
 #include "../types/simple.h"
 
-std::list<FileAction *> getFilesDiff(FilesMap prev, FilesMap *next);
+std::list<FileAction *> get_folders_diff(FilesMap prev, FilesMap *next);
 
 #endif // FILES_DIFF

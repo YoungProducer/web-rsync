@@ -3,7 +3,7 @@
 #include <chrono>
 
 #include "./lib/scan-dir.h"
-#include "./lib/files-diff.h"
+#include "./lib/folders-diff.h"
 #include "./lib/sha256-checksum.h"
 
 Napi::String sha256_checksum(const Napi::CallbackInfo &info)
@@ -25,10 +25,10 @@ Napi::String test(const Napi::CallbackInfo &info)
     std::string nextDirectoryPath = (std::string)info[1].ToString();
 
     auto start = std::chrono::high_resolution_clock::now();
-    FilesMap prev = scanDir(prevDirectoryPath);
-    FilesMap next = scanDir(nextDirectoryPath);
+    FilesMap prev = scan_dir(prevDirectoryPath);
+    FilesMap next = scan_dir(nextDirectoryPath);
 
-    std::list<FileAction *> diff = getFilesDiff(prev, &next);
+    std::list<FileAction *> diff = get_folders_diff(prev, &next);
     auto stop = std::chrono::high_resolution_clock::now();
 
     // for (const auto &e : result)

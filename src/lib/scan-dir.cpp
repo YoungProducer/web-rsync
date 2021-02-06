@@ -1,6 +1,6 @@
 #include "scan-dir.h"
 
-FilesMap scanDir(std::string path)
+FilesMap scan_dir(std::string path)
 {
     FilesMap result;
 
