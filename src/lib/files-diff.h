@@ -5,7 +5,7 @@
 #include <boost/unordered_map.hpp>
 #include <boost/container/list.hpp>
 
-#include "./types/simple.h"
+#include "../types/simple.h"
 
 std::list<FileAction *> getFilesDiff(FilesMap *next, FilesMap prev);
 

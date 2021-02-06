@@ -2,9 +2,9 @@
 #include <string>
 #include <chrono>
 
-#include "scan-dir.h"
-#include "files-diff.h"
-#include "sha256-checksum.h"
+#include "./lib/scan-dir.h"
+#include "./lib/files-diff.h"
+#include "./lib/sha256-checksum.h"
 
 Napi::String sha256_checksum(const Napi::CallbackInfo &info)
 {
