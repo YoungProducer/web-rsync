@@ -28,7 +28,7 @@ Napi::String test(const Napi::CallbackInfo &info)
     FilesMap prev = scanDir(prevDirectoryPath);
     FilesMap next = scanDir(nextDirectoryPath);
 
-    std::list<FileAction *> diff = getFilesDiff(&next, prev);
+    std::list<FileAction *> diff = getFilesDiff(prev, &next);
     auto stop = std::chrono::high_resolution_clock::now();
 
     // for (const auto &e : result)
