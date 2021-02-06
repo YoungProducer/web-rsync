@@ -27,6 +27,6 @@ struct FileAction
     FileAction(const std::string *path, ActionType type);
 };
 
-typedef std::unordered_map<std::string, std::string> FilesMap;
+typedef boost::unordered_map<std::string, std::string> FilesMap;
 
 #endif // SIMPLE

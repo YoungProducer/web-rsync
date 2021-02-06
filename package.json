@@ -2,6 +2,10 @@
   "name": "web-rsync",
   "version": "1.0.0",
   "main": "index.js",
+  "private": false,
+  "author": {
+    "name": "Alexander Bezrukov"
+  },
   "license": "MIT",
   "scripts": {
     "configure": "yarn node-gyp configure",
