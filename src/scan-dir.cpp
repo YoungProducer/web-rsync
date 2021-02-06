@@ -8,11 +8,12 @@ FilesMap scanDir(std::string path)
     {
         std::string filePath = file.path().string();
 
-        // std::cout << filePath << std::endl;
-
         std::string checksum = SHA256_CHECKSUM(filePath.c_str());
 
-        result.insert(std::make_pair(filePath, checksum));
+        /** doesn't include "path" which passes from params */
+        std::string relativePath = filePath.substr(filePath.find(path) + path.size());
+
+        result.insert(std::make_pair(relativePath, checksum));
     }
 
     return result;

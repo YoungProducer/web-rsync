@@ -23,6 +23,8 @@ struct FileAction
 {
     std::string path;
     ActionType type;
+
+    FileAction(const std::string *path, ActionType type);
 };
 
 typedef std::unordered_map<std::string, std::string> FilesMap;

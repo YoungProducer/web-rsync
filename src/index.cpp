@@ -3,6 +3,7 @@
 #include <chrono>
 
 #include "scan-dir.h"
+#include "files-diff.h"
 #include "sha256-checksum.h"
 
 Napi::String sha256_checksum(const Napi::CallbackInfo &info)
@@ -20,18 +21,29 @@ Napi::String test(const Napi::CallbackInfo &info)
 {
     Napi::Env env = info.Env();
 
-    std::string directoryPath = (std::string)info[0].ToString();
+    std::string prevDirectoryPath = (std::string)info[0].ToString();
+    std::string nextDirectoryPath = (std::string)info[1].ToString();
 
     auto start = std::chrono::high_resolution_clock::now();
-    FilesMap result = scanDir(directoryPath);
+    FilesMap prev = scanDir(prevDirectoryPath);
+    FilesMap next = scanDir(nextDirectoryPath);
+
+    std::list<FileAction *> diff = getFilesDiff(&next, prev);
     auto stop = std::chrono::high_resolution_clock::now();
 
-    for (const auto &e : result)
-    {
-        std::cout << "path: " << e.first << std::endl
-                  << "checksum: " << e.second << std::endl
-                  << std::endl;
-    }
+    // for (const auto &e : result)
+    // {
+    //     std::cout << "path: " << e.first << std::endl
+    //               << "checksum: " << e.second << std::endl
+    //               << std::endl;
+    // }
+
+    // for (const auto &e : diff)
+    // {
+    //     std::cout << "path: " << e->path << std::endl
+    //               << "action: " << e->type << std::endl
+    //               << std::endl;
+    // }
 
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 

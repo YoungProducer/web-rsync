@@ -2,13 +2,11 @@
 #define FILES_DIFF
 
 #include <string>
-#include <vector>
 #include <boost/unordered_map.hpp>
+#include <boost/container/list.hpp>
 
 #include "./types/simple.h"
 
-FileData findPair(std::string path, std::vector<FileData> *source);
-
-std::vector<FileAction> getFilesDiff(FilesMap *next, FilesMap *prev);
+std::list<FileAction *> getFilesDiff(FilesMap *next, FilesMap prev);
 
 #endif // FILES_DIFF

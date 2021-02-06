@@ -1,15 +1,31 @@
 #include "files-diff.h"
 
-std::vector<FileAction> getFilesDiff(std::vector<FileData> *next, std::unordered_map<std::string, std::string>)
+std::list<FileAction *> getFilesDiff(FilesMap *next, FilesMap prev)
 {
+    std::list<FileAction *> diff;
+
+    for (const auto &e : *next)
+    {
+        FilesMap::iterator pair = prev.find(e.first);
+
+        if (pair == prev.end())
+        {
+            diff.push_back(new FileAction(&e.first, ActionType::ADD));
+        }
+        else
+        {
+            if (e.second != pair->second)
+            {
+                diff.push_back(new FileAction(&e.first, ActionType::UPDATE));
+            }
+            prev.erase(pair);
+        }
+    }
+
+    for (const auto &e : prev)
+    {
+        diff.push_back(new FileAction(&e.first, ActionType::REMOVE));
+    }
+
+    return diff;
 }
-
-// std::vector<FileAction> *getFilesDiff(std::vector<FileData> *next, std::vector<FileData> *prev)
-// {
-//     std::vector<FileAction> *diff;
-
-//     for (int i = 0, length = next->size(); i < length; i++)
-//     {
-//         // if (next->at(i).checksum == )
-//     }
-// }

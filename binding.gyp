@@ -10,7 +10,6 @@
         "-std=c++17"
       ],
       "sources": [
-        "./src/sha256-checksum.cpp",
         "./src/index.cpp",
         '<!@(ls -1 ./src/*.cpp)',
         '<!@(ls -1 ./src/**/*.cpp)'
@@ -31,14 +30,6 @@
             '<(node_root_dir)/deps/openssl/openssl/include'
           ],
           "conditions" : [
-            ['OS=="linux"', {
-              "link-settings": {
-                "ldflags": [
-                  '-lssl',
-                  '-lcrypto'
-                ]
-              }
-            }],
             ["target_arch=='ia32'", {
               "include_dirs": [ "<(node_root_dir)/deps/openssl/config/piii" ]
             }],

@@ -1,7 +1,6 @@
 #ifndef SCAN_DIR
 #define SCAN_DIR
 
-#include <string>
 #include <filesystem>
 #include <boost/unordered_map.hpp>
 
