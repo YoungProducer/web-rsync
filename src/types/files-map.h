@@ -8,15 +8,18 @@
 
 typedef boost::unordered_map<std::string, std::string> FilesMapShorthand;
 
-void process_from_napi_object(Napi::Object &, FilesMapShorthand *);
-
 class FilesMap
 {
 public:
+    FilesMap(){};
+    FilesMap(FilesMapShorthand &map);
+
     void append(std::string path, std::string checksum);
     void append(std::pair<std::string, std::string> pair);
 
-    void remove(FilesMapShorthand it);
+    void remove(FilesMapShorthand::iterator it);
+
+    void clear();
 
     FilesMapShorthand *get_value();
 

@@ -25,7 +25,7 @@ Napi::Value scanDir(const Napi::CallbackInfo &info)
     std::string dirpath = (std::string)info[0].ToString();
     FilesMapShorthand content = scan_dir(dirpath);
 
-    return FilesMapWrap::transform_to_napi_object(env, &content);
+    return FilesMapWrap::Helpers::transform_to_napi_object(env, &content);
 }
 
 /** must be removed in future */

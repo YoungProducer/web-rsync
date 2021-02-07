@@ -1,20 +1,31 @@
 #include "files-map.h"
 
-void process_from_napi_object(Napi::Object &obj, FilesMapShorthand *fm)
+FilesMap::FilesMap(FilesMapShorthand &map)
+    : _value(map)
 {
-    const Napi::Array propertiesNames = obj.GetPropertyNames();
-    const short length = propertiesNames.Length();
-
-    for (int i = 0; i < length; i++)
-    {
-        std::string p_key = (std::string)propertiesNames[i].ToString();
-        std::string p_value = (std::string)obj.Get(p_key).ToString();
-        fm->insert(std::make_pair(p_key, p_value));
-    }
 }
 
-/** Native functions */
-boost::unordered_map<std::string, std::string> *FilesMap::get_value()
+void FilesMap::append(std::string path, std::string checksum)
+{
+    this->_value.insert(std::make_pair(path, checksum));
+}
+
+void FilesMap::append(std::pair<std::string, std::string> pair)
+{
+    this->_value.insert(pair);
+}
+
+void FilesMap::remove(FilesMapShorthand::iterator it)
+{
+    this->_value.erase(it);
+}
+
+void FilesMap::clear()
+{
+    this->_value.clear();
+}
+
+FilesMapShorthand *FilesMap::get_value()
 {
     return &(this->_value);
 }
