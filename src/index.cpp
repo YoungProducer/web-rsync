@@ -6,6 +6,7 @@
 #include "./lib/folders-diff.h"
 #include "./lib/sha256-checksum.h"
 #include "./utils/type-transform.h"
+#include "./types/files-map.h"
 
 Napi::String sha256_checksum(const Napi::CallbackInfo &info)
 {
@@ -17,6 +18,16 @@ Napi::String sha256_checksum(const Napi::CallbackInfo &info)
     return Napi::String::New(env, result);
 }
 
+Napi::Value scanDir(const Napi::CallbackInfo &info)
+{
+    Napi::Env env = info.Env();
+
+    std::string dirpath = (std::string)info[0].ToString();
+    FilesMapShorthand content = scan_dir(dirpath);
+
+    return FilesMap::transform_to_napi_object(env, &content);
+}
+
 /** must be removed in future */
 Napi::Array test(const Napi::CallbackInfo &info)
 {
@@ -26,8 +37,8 @@ Napi::Array test(const Napi::CallbackInfo &info)
     std::string nextDirectoryPath = (std::string)info[1].ToString();
 
     auto start = std::chrono::high_resolution_clock::now();
-    FilesMap prev = scan_dir(prevDirectoryPath);
-    FilesMap next = scan_dir(nextDirectoryPath);
+    boost::unordered_map<std::string, std::string> prev = scan_dir(prevDirectoryPath);
+    boost::unordered_map<std::string, std::string> next = scan_dir(nextDirectoryPath);
 
     std::vector<FileAction *> diff = get_folders_diff(prev, &next);
     auto stop = std::chrono::high_resolution_clock::now();
@@ -60,6 +71,12 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(
         Napi::String::New(env, "test"),
         Napi::Function::New(env, test));
+
+    exports.Set(
+        Napi::String::New(env, "scanDir"),
+        Napi::Function::New(env, scanDir));
+
+    FilesMap::Init(env, exports);
 
     return exports;
 }

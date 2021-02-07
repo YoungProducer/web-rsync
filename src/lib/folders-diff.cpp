@@ -1,12 +1,12 @@
 #include "folders-diff.h"
 
-std::vector<FileAction *> get_folders_diff(FilesMap prev, FilesMap *next)
+std::vector<FileAction *> get_folders_diff(boost::unordered_map<std::string, std::string> prev, boost::unordered_map<std::string, std::string> *next)
 {
     std::vector<FileAction *> diff;
 
     for (const auto &e : *next)
     {
-        FilesMap::iterator pair = prev.find(e.first);
+        boost::unordered_map<std::string, std::string>::iterator pair = prev.find(e.first);
 
         if (pair == prev.end())
         {

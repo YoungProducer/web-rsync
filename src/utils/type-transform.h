@@ -7,12 +7,15 @@
 #include <vector>
 
 #include "../types/simple.h"
+// #include "../types/files-map.h"
+
+class FilesMap;
 
 namespace TypeTransform
 {
     namespace Embedded
     {
-        Napi::Value file_action_to_napi_object(Napi::Env &env, FileAction act)
+        inline Napi::Value file_action_to_napi_object(Napi::Env &env, FileAction act)
         {
             Napi::Object result = Napi::Object::New(env);
 
@@ -26,7 +29,8 @@ namespace TypeTransform
 
             return result;
         };
-        Napi::Value file_action_to_napi_object(Napi::Env &env, FileAction *act)
+
+        inline Napi::Value file_action_to_napi_object(Napi::Env &env, FileAction *act)
         {
             Napi::Object result = Napi::Object::New(env);
 
@@ -40,12 +44,13 @@ namespace TypeTransform
 
             return result;
         };
+
     } // namespace Embedded
 
     namespace Advanced
     {
         template <typename T>
-        Napi::Array vector_to_napi_array(Napi::Env &env, std::vector<T> &source, Napi::Value (*f)(Napi::Env &env, T param))
+        inline Napi::Array vector_to_napi_array(Napi::Env &env, std::vector<T> &source, Napi::Value (*f)(Napi::Env &env, T param))
         {
             Napi::Array array = Napi::Array::New(env);
 
@@ -59,6 +64,6 @@ namespace TypeTransform
 
     } // namespace Advanced
 
-}; // namespace TypeTransform
+} // namespace TypeTransform
 
 #endif // TYPE_TRANSFORM
