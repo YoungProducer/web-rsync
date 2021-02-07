@@ -6,7 +6,7 @@
 #include "./lib/folders-diff.h"
 #include "./lib/sha256-checksum.h"
 #include "./utils/type-transform.h"
-#include "./types/files-map.h"
+#include "./types/files-map-wrap.h"
 
 Napi::String sha256_checksum(const Napi::CallbackInfo &info)
 {
@@ -25,7 +25,7 @@ Napi::Value scanDir(const Napi::CallbackInfo &info)
     std::string dirpath = (std::string)info[0].ToString();
     FilesMapShorthand content = scan_dir(dirpath);
 
-    return FilesMap::transform_to_napi_object(env, &content);
+    return FilesMapWrap::transform_to_napi_object(env, &content);
 }
 
 /** must be removed in future */
@@ -76,7 +76,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
         Napi::String::New(env, "scanDir"),
         Napi::Function::New(env, scanDir));
 
-    FilesMap::Init(env, exports);
+    FilesMapWrap::Init(env, exports);
 
     return exports;
 }
