@@ -5,6 +5,7 @@
 #include "./lib/scan-dir.h"
 #include "./lib/folders-diff.h"
 #include "./lib/sha256-checksum.h"
+#include "./utils/type-transform.h"
 
 Napi::String sha256_checksum(const Napi::CallbackInfo &info)
 {
@@ -17,7 +18,7 @@ Napi::String sha256_checksum(const Napi::CallbackInfo &info)
 }
 
 /** must be removed in future */
-Napi::String test(const Napi::CallbackInfo &info)
+Napi::Array test(const Napi::CallbackInfo &info)
 {
     Napi::Env env = info.Env();
 
@@ -28,7 +29,7 @@ Napi::String test(const Napi::CallbackInfo &info)
     FilesMap prev = scan_dir(prevDirectoryPath);
     FilesMap next = scan_dir(nextDirectoryPath);
 
-    std::list<FileAction *> diff = get_folders_diff(prev, &next);
+    std::vector<FileAction *> diff = get_folders_diff(prev, &next);
     auto stop = std::chrono::high_resolution_clock::now();
 
     // for (const auto &e : result)
@@ -50,7 +51,31 @@ Napi::String test(const Napi::CallbackInfo &info)
     std::cout << "Time taken by function: "
               << duration.count() << " microseconds" << std::endl;
 
-    return Napi::String::New(env, "good");
+    Napi::Array arr = Napi::Array::New(env);
+
+    auto startCoerce = std::chrono::high_resolution_clock::now();
+    for (int i = 0, length = diff.size(); i < length; i++)
+    {
+        Napi::Object value = Napi::Object::New(env);
+        value.Set(
+            Napi::String::New(env, "path"),
+            Napi::String::New(env, diff[i]->path.c_str()));
+        value.Set(
+            Napi::String::New(env, "type"),
+            Napi::String::New(env, diff[i]->type.c_str()));
+        arr.Set(i, value);
+    }
+    auto stopCoerce = std::chrono::high_resolution_clock::now();
+
+    auto durationCoerce = std::chrono::duration_cast<std::chrono::microseconds>(stopCoerce - startCoerce);
+
+    std::cout << "Time taken by function: "
+              << durationCoerce.count() << " microseconds" << std::endl;
+
+    Napi::Array result = TypeTransform::Advanced::vector_to_napi_array<FileAction *>(env, diff, TypeTransform::Embedded::file_action_to_napi_object);
+
+    // return Napi::String::New(env, "good");
+    return result;
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports)

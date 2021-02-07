@@ -1,8 +1,8 @@
 #include "folders-diff.h"
 
-std::list<FileAction *> get_folders_diff(FilesMap prev, FilesMap *next)
+std::vector<FileAction *> get_folders_diff(FilesMap prev, FilesMap *next)
 {
-    std::list<FileAction *> diff;
+    std::vector<FileAction *> diff;
 
     for (const auto &e : *next)
     {
