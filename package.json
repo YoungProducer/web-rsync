@@ -13,7 +13,11 @@
     "build:cpp": "yarn node-gyp build"
   },
   "dependencies": {
-    "node-addon-api": "^3.1.0"
+    "express": "^4.17.1",
+    "form-data": "^3.0.0",
+    "multiparty": "^4.2.2",
+    "node-addon-api": "^3.1.0",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "node-gyp": "^7.1.2"
