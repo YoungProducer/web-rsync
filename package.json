@@ -2,7 +2,7 @@
   "name": "web-rsync",
   "version": "1.0.0",
   "main": "index.js",
-  "typings": "lib/index.d.ts",
+  "typings": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/YoungProducer/web-rsync.git"
