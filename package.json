@@ -1,6 +1,6 @@
 {
   "name": "web-rsync",
-  "version": "1.0.2-alpha",
+  "version": "1.0.3-alpha",
   "main": "index.js",
   "typings": "index.d.ts",
   "repository": {
