@@ -1,4 +1,3 @@
-const native = require('./build/Release/file-checksum.node');
-const lib = require('./lib');
+const native = require('./build/Release/web-rsync.node');
 
-module.exports = { ...native, ...lib };
+module.exports = { ...native };

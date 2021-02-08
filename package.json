@@ -1,25 +1,31 @@
 {
   "name": "web-rsync",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha",
   "main": "index.js",
+  "typings": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YoungProducer/web-rsync.git"
+  },
   "private": false,
   "author": {
-    "name": "Alexander Bezrukov"
+    "name": "Oleksander Bezrukov",
+    "email": "sashabezrukovownmail@gmail.com"
   },
   "license": "MIT",
   "scripts": {
-    "configure": "yarn node-gyp configure",
-    "build": "yarn node-gyp configure && yarn build:cpp",
-    "build:cpp": "yarn node-gyp build"
+    "build": "yarn configure:cpp && yarn build:cpp",
+    "configure:cpp": "yarn node-gyp configure",
+    "build:cpp": "yarn node-gyp build",
+    "postinstall": "yarn build"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "form-data": "^3.0.0",
-    "multiparty": "^4.2.2",
     "node-addon-api": "^3.1.0",
-    "node-fetch": "^2.6.1"
-  },
-  "devDependencies": {
     "node-gyp": "^7.1.2"
-  }
+  },
+  "files": [
+    "src",
+    "binding.gyp",
+    "index.js"
+  ]
 }

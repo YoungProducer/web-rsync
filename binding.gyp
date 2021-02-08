@@ -1,7 +1,7 @@
 {
     "targets": [
         {
-            "target_name": "file-checksum",
+            "target_name": "web-rsync",
             "cflags!": ["-fno-exceptions"],
             "cflags_cc!": [
                 "-fno-exceptions",
