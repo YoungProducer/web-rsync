@@ -8,6 +8,7 @@
 #include "scan-dir.h"
 #include "../types/simple.h"
 
+std::vector<FileAction *> get_folders_diff(std::string *prevPath, std::string *nextPath);
 std::vector<FileAction *> get_folders_diff(FilesMap prev, FilesMap *next);
 std::vector<FileAction *> get_folders_diff(std::string *prevPath, FilesMap *next);
 

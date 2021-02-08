@@ -31,29 +31,40 @@ Napi::Array getFoldersDiff(const Napi::CallbackInfo &info)
 {
     Napi::Env env = info.Env();
 
-    if (!(info[0].IsObject() && info[1].IsObject()) && !(info[0].IsString() && info[1].IsObject()))
+    if (!(info[0].IsObject() && info[1].IsObject()) &&
+        !(info[0].IsString() && info[1].IsObject()) &&
+        !(info[0].IsString() && info[1].IsString()))
     {
         Napi::TypeError::New(env, "Invalid function arguments").ThrowAsJavaScriptException();
     }
 
     std::vector<FileAction *> diff;
 
-    Napi::Object nextScan = info[1].As<Napi::Object>();
-    FilesMap nextFm;
-    TypeTransform::Embedded::napi_object_to_files_map(nextScan, &nextFm);
-
-    if (info[0].IsObject())
+    if (info[0].IsObject() && info[1].IsObject())
     {
+        Napi::Object nextScan = info[1].As<Napi::Object>();
         Napi::Object prevScan = info[0].As<Napi::Object>();
+        FilesMap nextFm;
         FilesMap prevFm;
         TypeTransform::Embedded::napi_object_to_files_map(prevScan, &prevFm);
+        TypeTransform::Embedded::napi_object_to_files_map(nextScan, &nextFm);
         diff = get_folders_diff(prevFm, &nextFm);
     }
 
-    if (info[0].IsString())
+    if (info[0].IsString() && info[1].IsObject())
+    {
+        Napi::Object nextScan = info[1].As<Napi::Object>();
+        FilesMap nextFm;
+        std::string prevPath = (std::string)info[0].ToString();
+        TypeTransform::Embedded::napi_object_to_files_map(nextScan, &nextFm);
+        diff = get_folders_diff(&prevPath, &nextFm);
+    }
+
+    if (info[0].IsString() && info[1].IsString())
     {
         std::string prevPath = (std::string)info[0].ToString();
-        diff = get_folders_diff(&prevPath, &nextFm);
+        std::string nextPath = (std::string)info[1].ToString();
+        diff = get_folders_diff(&prevPath, &nextPath);
     }
 
     return TypeTransform::Advanced::vector_to_napi_array<FileAction *>(env, diff, TypeTransform::Embedded::file_action_to_napi_object);

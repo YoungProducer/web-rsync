@@ -1,15 +1,16 @@
 #ifndef SCAN_DIR
 #define SCAN_DIR
 
+#include <iostream>
 #include <vector>
 #include <filesystem>
-#include <boost/range.hpp>
+#include <unordered_map>
 
-#include "../types/simple.h"
 #include "sha256-checksum.h"
+#include "../types/simple.h"
 
-std::vector<std::string> get_dir_content(std::string path);
-void get_dir_content(std::string path, std::vector<std::string> *content);
+std::vector<std::string> get_dir_content(std::string path, bool excludeDirs);
+void get_dir_content(std::string path, std::vector<std::string> *content, bool excludeDirs);
 
 FilesMap scan_dir(std::string path);
 

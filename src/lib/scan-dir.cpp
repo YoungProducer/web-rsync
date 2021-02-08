@@ -1,28 +1,30 @@
 #include "scan-dir.h"
 
-std::vector<std::string> get_dir_content(std::string path)
+std::vector<std::string> get_dir_content(std::string path, bool excludeDirs = true)
 {
     std::vector<std::string> result;
 
-    for (const auto &file : std::filesystem::directory_iterator(path))
-    {
-        result.push_back(file.path().string());
-    }
+    get_dir_content(path, &result, excludeDirs);
 
     return result;
 }
 
-void get_dir_content(std::string path, std::vector<std::string> *content)
+void get_dir_content(std::string path, std::vector<std::string> *content, bool excludeDirs = true)
 {
-    for (const auto &file : std::filesystem::directory_iterator(path))
+    for (const auto &file : std::filesystem::recursive_directory_iterator(path))
     {
+        if (excludeDirs && file.is_directory())
+        {
+            continue;
+        }
+
         content->push_back(file.path().string());
     }
 }
 
 FilesMap scan_dir(std::string path)
 {
-    boost::unordered_map<std::string, std::string> result;
+    FilesMap result;
     std::vector<std::string> dir_content;
 
     if (std::filesystem::is_directory(path))

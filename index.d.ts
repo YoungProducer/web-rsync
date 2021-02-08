@@ -9,8 +9,10 @@ type FileAction = {
   type: ActionUnionType;
 }
 
-export declare type sha256_checksum = (path: string) => string;
+export declare function sha256_checksum(path: string): string;
 
-export declare type scanDir = (path: string) => FilesMap;
+export declare function scanDir(path: string): FilesMap;
 
-export declare type getFoldersDiff = (path: string, next: FilesMap) => FileAction[]; 
+export declare function getFoldersDiff(path: string, path: string): FileAction[];
+export declare function getFoldersDiff(path: string, next: FilesMap): FileAction[];
+export declare function getFoldersDiff(path: FilesMap, next: FilesMap): FileAction[];
