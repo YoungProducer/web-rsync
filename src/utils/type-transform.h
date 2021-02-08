@@ -71,7 +71,10 @@ namespace TypeTransform
             FilesMap result;
 
             const Napi::Array propertiesNames = obj.GetPropertyNames();
+            std::cout << "hello" << std::endl;
             const short length = propertiesNames.Length();
+
+            std::cout << "hello" << length << std::endl;
 
             for (int i = 0; i < length; i++)
             {
