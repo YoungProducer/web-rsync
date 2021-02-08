@@ -20,7 +20,7 @@ void get_dir_content(std::string path, std::vector<std::string> *content)
     }
 }
 
-boost::unordered_map<std::string, std::string> scan_dir(std::string path)
+FilesMap scan_dir(std::string path)
 {
     boost::unordered_map<std::string, std::string> result;
     std::vector<std::string> dir_content;

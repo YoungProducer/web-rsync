@@ -7,6 +7,6 @@
 
 #include "../types/simple.h"
 
-std::vector<FileAction *> get_folders_diff(boost::unordered_map<std::string, std::string> prev, boost::unordered_map<std::string, std::string> *next);
+std::vector<FileAction *> get_folders_diff(FilesMap prev, FilesMap *next);
 
 #endif // FILES_DIFF
