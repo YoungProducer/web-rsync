@@ -25,6 +25,7 @@
   },
   "files": [
     "src",
+    "scripts",
     "binding.gyp",
     "index.js",
     "index.d.ts"
