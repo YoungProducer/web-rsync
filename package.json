@@ -17,7 +17,7 @@
     "build": "yarn configure:cpp && yarn build:cpp",
     "configure:cpp": "yarn node-gyp configure",
     "build:cpp": "yarn node-gyp build",
-    "postinstall": "yarn build"
+    "postinstall": "sh ./scripts/postinstall.sh yarn build"
   },
   "dependencies": {
     "node-addon-api": "^3.1.0",
