@@ -29,5 +29,12 @@
     "binding.gyp",
     "index.js",
     "index.d.ts"
-  ]
+  ],
+  "devDependencies": {
+    "chalk": "^4.1.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
+    "node-fetch": "^2.6.1",
+    "rimraf": "^3.0.2"
+  }
 }
