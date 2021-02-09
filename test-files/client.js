@@ -6,37 +6,22 @@ const FormData = require("form-data");
 const { scanDir } = require("../index");
 
 const api = "http://localhost:3000/";
-const defaultPath = "/Users/leon/dev/web-rsync/test-files/prev";
+const defaultPath = path.join(__dirname, "next");
 
+/**
+ *
+ * @param {string} path
+ */
 function scan(path) {
   let content = scanDir(path);
   return content;
 }
 
-function sendScan(data, callback) {
-  const map = data || content;
-  const body = JSON.stringify({
-    map,
-    target: prevLocation,
-  });
-
-  fetch(api + "scan", {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    referrerPolicy: "no-referrer",
-    body,
-  })
-    .then((res) => {
-      return callback(res.json(), null);
-    })
-    .catch((err) => callback(null, err));
-}
-
+/**
+ *
+ * @param {import("../index").FilesMap} data
+ * @returns {Promise<object>}
+ */
 function sendScanSync(data) {
   const map = data;
   const body = JSON.stringify({
@@ -56,54 +41,52 @@ function sendScanSync(data) {
   }).then((res) => res.json());
 }
 
+/**
+ *
+ * @param {import("../index").FileAction[]} diff
+ * @param {string} basePath
+ */
 function prepareFiles(diff, basePath = defaultPath) {
   const formData = new FormData();
 
   diff
     .filter(({ type }) => type !== "REMOVE")
     .forEach((el) => {
-      console.log(path.join(basePath, el.path));
-      fs.readFile(path.join(basePath, el.path), (err, data) => {
-        if (err) {
-          console.log(err);
-        }
-
-        formData.append(el.path, data);
-      });
+      const filePath = path.join(basePath, el.path);
+      const data = fs.createReadStream(filePath);
+      formData.append(el.path, data);
     });
 
   return formData;
 }
 
-async function sendDiff(diff, basePath = defaultPath) {
-  const data = prepareFiles(diff, basePath);
-
-  return await sendPreparedDiff(data, basePath);
-}
-
+/**
+ *
+ * @param {FormData} pDiff
+ * @param {string} basePath
+ */
 function sendPreparedDiff(pDiff, basePath = defaultPath) {
+  console.log("Sending diff");
   return fetch(api + "send_diff", {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
     credentials: "same-origin", // include, *same-origin, omit
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
+    headers: pDiff.getHeaders(),
     referrerPolicy: "no-referrer", // no-referrer, *client
     body: pDiff,
   });
 }
 
-const s = scan("/Users/leon/dev/web-rsync/test-files/prev");
-console.log({ scan: s });
+const s = scan(path.join(__dirname, "next"));
 
 sendScanSync(s)
   .then((res) => {
-    console.log({ res });
+    console.log("Preparing files");
     const data = prepareFiles(res);
+    console.log("Prepared files");
     return sendPreparedDiff(data);
   })
   .then((res) => {
-    console.log(res);
+    console.log("Sent diff");
   });

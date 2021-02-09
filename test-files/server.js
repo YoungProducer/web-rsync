@@ -1,40 +1,69 @@
 const express = require("express");
-const bodyParser = require("body-parser");
+const fs = require("fs");
+const multer = require("multer");
+const rimraf = require("rimraf");
+const path = require("path");
+const chalk = require("chalk");
 
-const { getFoldersDiff } = require("../index");
+const { getFoldersDiff, scanDir } = require("../index");
+const { assert } = require("console");
+
+const port = 3000;
+const tempUploadDir = path.join(__dirname, "temp_upload");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, tempUploadDir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage });
+
+if (!fs.existsSync(tempUploadDir)) {
+  fs.mkdirSync(tempUploadDir);
+}
 
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-const port = 3000;
+app.use(express.json());
+
+app.post("/scan", (req, res) => {
+  const target = path.join(__dirname, "prev");
+  const map = req.body && req.body.map;
+
+  if (!map) {
+    res.status(400).send({
+      error: "Error",
+    });
+    return;
+  }
+
+  console.log("Scanning " + target);
+
+  const diff = getFoldersDiff(target, map);
+  console.log("Scan finished, returning diff");
+  res.send(diff);
+  console.log("Diff returned");
+});
+
+app.post("/send_diff", upload.any(), (req, res) => {
+  console.log("Applying diff");
+  fs.readdirSync(path.join(__dirname, "next")).forEach((f) => {
+    fs.copyFileSync(
+      path.join(__dirname, "next", f),
+      path.join(tempUploadDir, f)
+    );
+  });
+  const should = JSON.stringify(scanDir(path.join(__dirname, "next")));
+  const is = JSON.stringify(scanDir(tempUploadDir));
+
+  assert(should === is, chalk.red("Folders are not equal after patch"));
+  console.log(chalk.green("Folders are equal"));
+  rimraf.sync(tempUploadDir);
+  res.sendStatus(200);
+  process.exit(0);
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
-});
-
-app.post("/scan", (req, res) => {
-  const target = "/Users/leon/dev/web-rsync/test-files/next";
-  const map = req.body.map;
-
-  const diff = getFoldersDiff(target, map);
-  res.send(diff);
-});
-
-app.post("/send_diff", (req, res) => {
-  console.log(req.files);
-  console.log(req.body);
-  // const form = new multiparty.Form();
-
-  // form.parse(req, (err, fields, files) => {
-  //     Object.keys(fields).forEach(function(name) {
-  //         console.log('got field named ' + name);
-  //     });
-
-  //     Object.keys(files).forEach(function(name) {
-  //         console.log('got file named ' + name);
-  //     });
-
-  //     console.log('Upload completed!');
-  //     res.status(200).send('Received ' + files.length + ' files');
-  // });
 });
