@@ -6,7 +6,7 @@ A simple rsync-ish implementation to sync files between node applications
 
 ## Requirements
 
-Currently works only on Linux and Mac. The required libraries for linus are listed in `postinstall.sh` in scripts
+Currently works only on Linux and Mac. The required libraries for linux are listed in `postinstall.sh` in scripts
 
 ## Installation
 
