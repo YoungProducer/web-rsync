@@ -26,6 +26,7 @@ FilesMap scan_dir(std::string path)
 {
     FilesMap result;
     std::vector<std::string> dir_content;
+    std::string normalized_path = normalize_path(path);
 
     if (std::filesystem::is_directory(path))
     {
@@ -37,7 +38,7 @@ FilesMap scan_dir(std::string path)
             std::string checksum = SHA256_CHECKSUM(path.c_str());
 
             /** doesn't include "path" which passes from params */
-            std::string relative_path = curr_path.substr(curr_path.find(path) + path.size());
+            std::string relative_path = curr_path.substr(curr_path.find(normalized_path) + normalized_path.size());
 
             result.insert(std::make_pair(relative_path, checksum));
         }

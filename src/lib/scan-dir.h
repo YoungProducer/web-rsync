@@ -7,6 +7,7 @@
 #include <unordered_map>
 
 #include "sha256-checksum.h"
+#include "../utils/normalize-path.h"
 #include "../types/simple.h"
 
 std::vector<std::string> get_dir_content(std::string path, bool excludeDirs);
