@@ -35,7 +35,8 @@ FilesMap scan_dir(std::string path)
         for (int i = 0, length = dir_content.size(); i < length; i++)
         {
             std::string curr_path = dir_content[i];
-            std::string checksum = SHA256_CHECKSUM(path.c_str());
+
+            std::string checksum = SHA256_CHECKSUM(curr_path.c_str());
 
             /** doesn't include "path" which passes from params */
             std::string relative_path = curr_path.substr(curr_path.find(normalized_path) + normalized_path.size());
