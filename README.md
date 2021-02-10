@@ -1,12 +1,12 @@
 # Web-rsync
 
-A simple rsync-ish implementation to sync files between node applications
+A simple rsync-ish implementation to sync files between node applications.
 
 ---
 
 ## Requirements
 
-Currently works only on Linux and Mac. The required libraries for linux are listed in `postinstall.sh` in scripts
+Currently works only on Linux and Mac. The required libraries for linux are listed in `postinstall.sh` in scripts.
 
 ## Installation
 
@@ -18,7 +18,7 @@ Currently works only on Linux and Mac. The required libraries for linux are list
 
 - #### Windows
 
-  Unfortunately, currentlty there is no suppotrt for windows, **contributors are wecome**.
+  Unfortunately, currently there is no support for windows, **contributors are welcome**.
 
 ## Usage
 
@@ -50,7 +50,7 @@ getFoldersDiff(prevScan, nextScan);
 
 ## Example
 
-An example usage with express over http is in `test-files/server` and `test-files/client`
+An example usage with express over http is in `test-files/server` and `test-files/client`.
 
 ## Contribution
 
